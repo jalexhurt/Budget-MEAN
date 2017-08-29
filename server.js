@@ -7,13 +7,16 @@ var bodyParser = require("body-parser");
 var pug = require("pug");
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
+var path = require("path");
+var _ = require("underscore");
 
 /************************************
  * ExpressJS Setup
  ************************************/
 
 app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(__dirname));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 var options = {
   host: "localhost",
@@ -34,7 +37,24 @@ app.use(
     saveUninitialized: false
   })
 );
-app.listen("8000");
+
+//login
+app.use(function(req, res, next) {
+  if (
+    (!req.session || !req.session.authorized_user) &&
+    req.originalUrl.indexOf("login") == -1 &&
+    req.originalUrl.indexOf(".css") == -1 &&
+    req.originalUrl.indexOf(".js") == -1
+  ) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+});
+
+app.listen("8000", function(err) {
+  console.log("Listening on http://127.0.0.1:8000");
+});
 
 /*********************************
  * GLOBAL Functions
@@ -44,10 +64,10 @@ function get_response(body, title) {
     title = "Budget Application";
   }
   var response =
-    fs.readFileSync("html/header.html") +
-    pug.renderFile("pug/title.pug", { title: title });
+    fs.readFileSync("html" + path.sep + "header.html", "utf8") +
+    pug.renderFile("pug" + path.sep + "title.pug", { title: title });
   response += body;
-  response += fs.readFileSync("html/footer.html");
+  response += fs.readFileSync("html" + path.sep + "footer.html", "utf8");
   return response;
 }
 
@@ -56,5 +76,11 @@ function get_response(body, title) {
  **********************************/
 
 app.get("/", function(req, res) {
-  res.send(get_response("Hello World"));
+  res.send(
+    get_response(fs.readFileSync("html" + path.sep + "home-page.html", "utf8"))
+  );
+});
+
+app.get("/login", function(req, res) {
+  res.send(get_response("Login here"));
 });
