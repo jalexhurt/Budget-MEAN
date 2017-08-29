@@ -1,11 +1,12 @@
 {
   "name": "Budget-MEAN",
   "version": "1.0.0",
-  "description": "",
+  "description": "A budget application using the mean stack",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.17.2",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "pug": "~2.0.0-rc.3"
   },
   "devDependencies": {},
   "scripts": {
