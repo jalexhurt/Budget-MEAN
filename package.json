@@ -6,7 +6,9 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
-    "pug": "~2.0.0-rc.3"
+    "pug": "~2.0.0-rc.3",
+    "express-session": "~1.15.5",
+    "express-mysql-session": "~1.2.2"
   },
   "devDependencies": {},
   "scripts": {
