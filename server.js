@@ -9,6 +9,8 @@ var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var path = require("path");
 var _ = require("underscore");
+var https = require("https");
+var http = require("http");
 
 /************************************
  * ExpressJS Setup
@@ -52,9 +54,16 @@ app.use(function(req, res, next) {
   }
 });
 
-app.listen("8000", function(err) {
-  console.log("Listening on http://127.0.0.1:8000");
-});
+https
+  .createServer({
+    key: fs.readFileSync("ssl/key.pem"),
+    cert: fs.readFileSync("ssl/cert.pem")
+  })
+  .listen(443, function() {
+    console.log("Server Running!");
+  });
+
+// http.createServer(function(req, res) {}).listen(80);
 
 /*********************************
  * GLOBAL Functions
@@ -71,16 +80,43 @@ function get_response(body, title) {
   return response;
 }
 
+function send_html_file(file) {
+  if (file.substring(file.length - 5) != ".html") {
+    file = file + ".html";
+  }
+  var body = fs.readFileSync("html" + path.sep + file, "utf8");
+  var r = get_response(body);
+  return r;
+}
+
+function authenticate(username, password) {
+  if (username == "alex" && password == "admin") {
+    return true;
+  }
+  return false;
+}
+
 /***********************************
  * ROUTING
  **********************************/
 
 app.get("/", function(req, res) {
-  res.send(
-    get_response(fs.readFileSync("html" + path.sep + "home-page.html", "utf8"))
-  );
+  res.send(send_html_file("home-page"));
 });
 
 app.get("/login", function(req, res) {
-  res.send(get_response("Login here"));
+  res.send(send_html_file("login"));
+});
+
+app.post("/login", function(req, res) {
+  if (authenticate(req.body.username, req.body.password)) {
+    req.session.authorized_user = req.body.username;
+    res.redirect("/");
+  } else {
+    res.redirect("/unauthorized");
+  }
+});
+
+app.get("/unauthorized", function(req, res) {
+  res.send("unauthorize");
 });
