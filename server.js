@@ -21,7 +21,7 @@ app.listen("8000");
      if(!title || typeof title === 'undefined') {
          title = "Budget Application";
      }
-     var response = fs.readFileSync("html/header.html") + pug.parseFile("pug/title.pug", {title: title});
+     var response = fs.readFileSync("html/header.html") + pug.renderFile("pug/title.pug", {title: title});
      response += body;
      response += fs.readFileSync("html/footer.html");
      return response;
