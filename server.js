@@ -58,12 +58,16 @@ https
   .createServer({
     key: fs.readFileSync("ssl/key.pem"),
     cert: fs.readFileSync("ssl/cert.pem")
-  })
+  }, app)
   .listen(443, function() {
     console.log("Server Running!");
   });
 
-// http.createServer(function(req, res) {}).listen(80);
+http.createServer(app, function(req, res) {
+    console.log(req.headers.host);
+    res.writeHead(302, {"Location" : "https://" + req.headers.host + "/"});
+    res.end();
+}).listen(80);
 
 /*********************************
  * GLOBAL Functions
