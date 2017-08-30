@@ -63,7 +63,7 @@ https
     console.log("Server Running!");
   });
 
-http.createServer(app, function(req, res) {
+http.createServer(function(req, res) {
     console.log(req.headers.host);
     res.writeHead(302, {"Location" : "https://" + req.headers.host + "/"});
     res.end();
