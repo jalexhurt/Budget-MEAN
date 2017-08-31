@@ -122,5 +122,5 @@ app.post("/login", function(req, res) {
 });
 
 app.get("/unauthorized", function(req, res) {
-  res.send("unauthorize");
+  res.send(send_html_file("unauthorized"));
 });
