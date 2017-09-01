@@ -1,0 +1,32 @@
+<div class="container-fluid" ng-controller="HomePageController as ctrl">
+    <!-- Summary -->
+    <div class="col-md-4 text-center">
+        <h3>Summary</h3>
+        <p>Balance: ${{ctrl.balance}}</p>
+    </div>
+    <!-- Transactions -->
+    <div class="col-md-8">
+        <h3 class="text-center">Recent Transactions</h3>
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+                <tr ng-repeat="row in ctrl.transactions">
+                    <td ng-repeat="item in row">
+                        {{item}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12 text-right">
+            <a href="/view-transactions">View All Transactions >></a>
+        </div>
+    </div>
+    <!-- Add Transaction -->
+    <div class="col-md-6">
+        <add-transasction></add-transasction>
+    </div>
+</div>
