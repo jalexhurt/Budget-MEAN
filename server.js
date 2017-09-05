@@ -46,7 +46,6 @@ app.use(function(req, res, next) {
   if (
     (!req.session || !req.session.authorized_user) &&
     req.originalUrl.indexOf("login") == -1 &&
-    req.originalUrl.indexOf("unauthorized") == -1 &&
     req.originalUrl.indexOf(".css") == -1 &&
     req.originalUrl.indexOf(".js") == -1
   ) {
@@ -119,10 +118,6 @@ app.post("/login", function(req, res) {
     req.session.authorized_user = req.body.username;
     res.redirect("/");
   } else {
-    res.redirect("/unauthorized");
+    res.status(403).send(send_html_file("unauthorized"));
   }
-});
-
-app.get("/unauthorized", function(req, res) {
-  res.status(403).send(send_html_file("unauthorized"));
 });
