@@ -1,6 +1,6 @@
 var app = angular.module("Budget", []);
 
-app.controller("HomePageController", function() {
+app.controller("HomePageController", ['$http', function($http) {
     //need to load from db
     this.transactions = [];
     for(var i =0; i < 100; i ++) {
@@ -19,7 +19,7 @@ app.controller("HomePageController", function() {
             alert(err);
         })
     }
-})
+}])
 
 app.directive("addTransaction", function() {
     return {    
