@@ -11,6 +11,7 @@ var path = require("path");
 var _ = require("underscore");
 var https = require("https");
 var http = require("http");
+var mysql = require("mysql");
 
 /************************************
  * ExpressJS Setup
