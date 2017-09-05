@@ -42,9 +42,11 @@ app.use(
 
 //login
 app.use(function(req, res, next) {
+  console.log("Trying to load: " + req.originalUrl);
   if (
     (!req.session || !req.session.authorized_user) &&
     req.originalUrl.indexOf("login") == -1 &&
+    req.originalUrl.indexOf("unauthorized") == -1 &&
     req.originalUrl.indexOf(".css") == -1 &&
     req.originalUrl.indexOf(".js") == -1
   ) {
@@ -122,5 +124,5 @@ app.post("/login", function(req, res) {
 });
 
 app.get("/unauthorized", function(req, res) {
-  res.send(send_html_file("unauthorized"));
+  res.status(403).send(send_html_file("unauthorized"));
 });
