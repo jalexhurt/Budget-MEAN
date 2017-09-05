@@ -1,11 +1,16 @@
 var app = angular.module("Budget", []);
 
 app.controller("HomePageController", function() {
-    this.transactions = [
-        [1,2,3],
-        [4,5,6]
-    ]
-    this.balance = 50
+    //need to load from db
+    this.transactions = [];
+    for(var i =0; i < 100; i ++) {
+        this.transactions.push([i,i+1, i+2]);
+        i = i+2;
+    }
+        
+    this.balance = 50;
+    this.average = 10;
+    this.high = 100;
 })
 
 app.directive("addTransaction", function() {

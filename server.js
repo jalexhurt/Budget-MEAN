@@ -65,7 +65,6 @@ https
   });
 
 http.createServer(function(req, res) {
-    console.log(req.headers.host);
     res.writeHead(302, {"Location" : "https://" + req.headers.host + "/"});
     res.end();
 }).listen(80);
@@ -121,3 +120,7 @@ app.post("/login", function(req, res) {
     res.status(403).send(send_html_file("unauthorized"));
   }
 });
+
+app.get("/view-transactions", function(req, res) {
+  res.send(send_html_file("transactions"))
+})

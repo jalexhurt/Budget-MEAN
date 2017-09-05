@@ -2,12 +2,16 @@
     <!-- Summary -->
     <div class="col-md-4 text-center">
         <h3>Summary</h3>
-        <p>Balance: ${{ctrl.balance}}</p>
+        <ul class="col-md-offset-2 col-md-10 text-left">
+            <li>Balance: ${{ctrl.balance}}</li>
+            <li>Average: ${{ctrl.balance}}</li>
+            <li>Max: ${{ctrl.high}}</li>
+        </ul>
     </div>
     <!-- Transactions -->
     <div class="col-md-8">
         <h3 class="text-center">Recent Transactions</h3>
-        <div class="col-md-12">
+        <div class="col-md-12" style="max-height:200px;overflow:auto;">
             <table class="table table-hover">
                 <tr>
                     <th>Date</th>
