@@ -19,6 +19,14 @@ app.controller("HomePageController", ['$http', function($http) {
             alert(err);
         })
     }
+    this.showAddTransaction = function() {
+        $("#add-transaction").dialog({
+            modal:true,
+            resizable: false,
+            draggable: false,
+            title: "Add Transaction"
+        });
+    }
 }])
 
 app.directive("addTransaction", function() {

@@ -1,15 +1,26 @@
 <div class="container-fluid" ng-controller="HomePageController as ctrl">
     <!-- Summary -->
-    <div class="col-md-4 text-center">
-        <h3>Summary</h3>
-        <ul class="col-md-offset-2 col-md-10 text-left">
-            <li>Balance: ${{ctrl.balance}}</li>
-            <li>Average: ${{ctrl.balance}}</li>
-            <li>Max: ${{ctrl.high}}</li>
-        </ul>
+    <div class="col-md-2">
+        <div class="col-md-12">
+            <h3>Summary</h3>
+            <ul class="col-md-offset-2 col-md-10 text-left">
+                <li>Balance: ${{ctrl.balance}}</li>
+                <li>Average: ${{ctrl.balance}}</li>
+                <li>Max: ${{ctrl.high}}</li>
+            </ul>
+        </div>
+        <!-- Add Transaction -->
+        <div class="col-md-12">
+            
+                <h3 class="">Actions</h3>
+                <ul class="col-md-offset-2 col-md-10 text-left">
+                    <li><a style="cursor: pointer" ng-click="ctrl.showAddTransaction()">Add Transaction</a></li>
+                </ul>
+            
+        </div>
     </div>
     <!-- Transactions -->
-    <div class="col-md-8">
+    <div class="col-md-10">
         <h3 class="text-center">Recent Transactions</h3>
         <div class="col-md-12" style="max-height:200px;overflow:auto;">
             <table class="table table-hover">
@@ -29,10 +40,11 @@
             <a href="/view-transactions">View All Transactions >></a>
         </div>
     </div>
-    <!-- Add Transaction -->
-    <div class="col-md-6">
-        <h3 class="text-center">Add Transaction</h3>
+    
+
+    <div hidden="hidden" id="add-transaction">
         <add-transaction></add-transaction>
     </div>
-
+    
 </div>
+
