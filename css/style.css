@@ -6,5 +6,5 @@ footer {
 }
 
 input.ng-dirty.ng-invalid {
-  border:solid red 3px;
+  border: solid red 3px;
 }

@@ -21,10 +21,10 @@ app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 var options = {
-  host: "localhost",
+  host: "cstigers.ddns.net",
   port: 3306,
   user: "webuser",
-  password: "webBuget_123",
+  password: "Buget_123",
   database: "budget"
 };
 
@@ -56,18 +56,23 @@ app.use(function(req, res, next) {
 });
 
 https
-  .createServer({
-    key: fs.readFileSync("ssl/key.pem"),
-    cert: fs.readFileSync("ssl/cert.pem")
-  }, app)
+  .createServer(
+    {
+      key: fs.readFileSync("ssl/key.pem"),
+      cert: fs.readFileSync("ssl/cert.pem")
+    },
+    app
+  )
   .listen(443, function() {
     console.log("Server Running!");
   });
 
-http.createServer(function(req, res) {
-    res.writeHead(302, {"Location" : "https://" + req.headers.host + "/"});
+http
+  .createServer(function(req, res) {
+    res.writeHead(302, { Location: "https://" + req.headers.host + "/" });
     res.end();
-}).listen(80);
+  })
+  .listen(80);
 
 /*********************************
  * GLOBAL Functions
@@ -122,9 +127,9 @@ app.post("/login", function(req, res) {
 });
 
 app.get("/view-transactions", function(req, res) {
-  res.send(send_html_file("transactions"))
-})
+  res.send(send_html_file("transactions"));
+});
 
 app.post("/add", function(req, res) {
   res.send("Done");
-})
+});
