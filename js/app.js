@@ -11,6 +11,14 @@ app.controller("HomePageController", function() {
     this.balance = 50;
     this.average = 10;
     this.high = 100;
+
+    this.addTransaction = function() {
+        $http.post("/add", this).then(function(res) {
+            alert("Success");
+        }, function(err) {
+            alert(err);
+        })
+    }
 })
 
 app.directive("addTransaction", function() {

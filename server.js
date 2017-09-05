@@ -124,3 +124,7 @@ app.post("/login", function(req, res) {
 app.get("/view-transactions", function(req, res) {
   res.send(send_html_file("transactions"))
 })
+
+app.post("/add", function(req, res) {
+  res.send("Done");
+})

@@ -1,2 +1,18 @@
-<form class="form" method="POST" action="/add">
+<form name="addTransactionForm" class="form" ng-submit="ctrl.addTransaction()">
+    <div class="form-group">
+        <label class="control-label">Date: </label>
+        <input type="date" name="date" class="form-control" ng-model="ctrl.date" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Description: </label>
+        <input type="text" maxlength="30" name="desc" class="form-control" ng-model="ctrl.description" required />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Amount: </label>
+        <input type="number" min=".01" step=".01" name="amt" class="form-control" ng-model="ctrl.amount" required />
+    </div>
+    <div class="form-group" required>
+        <button class="btn btn-primary" type="submit" ng-disabled="!addTransactionForm.$valid">Submit</button>
+    </div>
+    
 </form>
