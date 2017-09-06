@@ -11,8 +11,16 @@
         <label class="control-label">Amount: </label>
         <input type="number" min=".01" step=".01" name="amt" class="form-control" ng-model="ctrl.amount" required />
     </div>
+    <div class="form-group">
+        <label class="control-label">Type: </label>
+        <select name="type" ng-model="ctrl.type" class="form-control" required>
+            <option></option>
+            <option>CREDIT</option>
+            <option>DEBIT</option>
+        </select>
+    </div>
     <div class="form-group" required>
         <button class="btn btn-primary" type="submit" ng-disabled="!addTransactionForm.$valid">Submit</button>
     </div>
-    
+
 </form>
