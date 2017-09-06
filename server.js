@@ -12,6 +12,7 @@ var _ = require("underscore");
 var https = require("https");
 var http = require("http");
 var mysql = require("mysql");
+var Q = require("q");
 
 /************************************
  * ExpressJS Setup
@@ -43,7 +44,6 @@ app.use(
 
 //login
 app.use(function(req, res, next) {
-  console.log("Trying to load: " + req.originalUrl);
   if (
     (!req.session || !req.session.authorized_user) &&
     req.originalUrl.indexOf("login") == -1 &&
@@ -100,10 +100,25 @@ function send_html_file(file) {
 }
 
 function authenticate(username, password) {
-  if (username == "alex" && password == "admin") {
-    return true;
-  }
-  return false;
+  var dfd = Q.defer();
+  var conn = mysql.createConnection(options);
+  conn.connect(function(err) {
+    if (err) {
+      dfd.resolve(false);
+    }
+    conn.query(
+      "SELECT * FROM users WHERE username = ? and password = ?",
+      [username, password],
+      function(err, result) {
+        if (err) {
+          dfd.resolve(false);
+        }
+        var returnVal = result.length > 0;
+        dfd.resolve(returnVal);
+      }
+    );
+  });
+  return dfd.promise;
 }
 
 /***********************************
@@ -119,12 +134,14 @@ app.get("/login", function(req, res) {
 });
 
 app.post("/login", function(req, res) {
-  if (authenticate(req.body.username, req.body.password)) {
-    req.session.authorized_user = req.body.username;
-    res.redirect("/");
-  } else {
-    res.status(403).send(send_html_file("unauthorized"));
-  }
+  authenticate(req.body.username, req.body.password).then(function(valid) {
+    if (valid) {
+      req.session.authorized_user = req.body.username;
+      res.redirect("/");
+    } else {
+      res.status(403).send(send_html_file("unauthorized"));
+    }
+  });
 });
 
 app.get("/view-transactions", function(req, res) {
