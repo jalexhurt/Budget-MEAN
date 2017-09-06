@@ -169,7 +169,6 @@ app.post("/get-transactions", function(req, res) {
         if (err) {
           res.send(error(err));
         }
-        console.log(result);
         res.send(result);
       }
     );

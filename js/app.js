@@ -10,11 +10,20 @@ app.controller("HomePageController", [
       for (var i = 0; i < s.transactions.length; i++) {
         s.transactions[i].date = s.transactions[i].date.substring(0, 10);
       }
-    });
 
-    this.balance = 50;
-    this.average = 10;
-    this.high = 100;
+      var total = 0;
+      var h = -1;
+      var unsignedTotal = 0;
+      for (var i = 0; i < s.transactions.length; i++) {
+        var a = parseFloat(s.transactions[i].amount);
+        unsignedTotal += Math.abs(a);
+        total += s.transactions[i].type == "CREDIT" >= 0 ? a : -1 * a;
+        h = a > h ? a : h;
+      }
+      s.balance = total;
+      s.high = h;
+      s.average = unsignedTotal / s.transactions.length;
+    });
 
     this.addTransaction = function() {
       $http.post("/add", this).then(
