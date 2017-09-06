@@ -121,6 +121,10 @@ function authenticate(username, password) {
   return dfd.promise;
 }
 
+function error(err) {
+  return err;
+}
+
 /***********************************
  * ROUTING
  **********************************/
@@ -150,4 +154,24 @@ app.get("/view-transactions", function(req, res) {
 
 app.post("/add", function(req, res) {
   res.send("Done");
+});
+
+app.post("/get-transactions", function(req, res) {
+  var conn = mysql.createConnection(options);
+  conn.connect(function(err) {
+    if (err) {
+      res.send(error(err));
+    }
+    conn.query(
+      "SELECT date(date) as date, description, amount, type FROM transaction WHERE username = ?",
+      [req.session.authorized_user],
+      function(err, result) {
+        if (err) {
+          res.send(error(err));
+        }
+        console.log(result);
+        res.send(result);
+      }
+    );
+  });
 });

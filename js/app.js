@@ -4,11 +4,13 @@ app.controller("HomePageController", [
   "$http",
   function($http) {
     //need to load from db
-    this.transactions = [];
-    for (var i = 0; i < 100; i++) {
-      this.transactions.push([i, i + 1, i + 2]);
-      i = i + 2;
-    }
+    var s = this;
+    $http.post("/get-transactions").then(function(res) {
+      s.transactions = res.data;
+      for (var i = 0; i < s.transactions.length; i++) {
+        s.transactions[i].date = s.transactions[i].date.substring(0, 10);
+      }
+    });
 
     this.balance = 50;
     this.average = 10;
