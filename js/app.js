@@ -5,30 +5,34 @@ app.controller("HomePageController", [
   function($http) {
     //need to load from db
     var s = this;
-    $http.post("/get-transactions").then(function(res) {
-      s.transactions = res.data;
-      for (var i = 0; i < s.transactions.length; i++) {
-        s.transactions[i].date = s.transactions[i].date.substring(0, 10);
-      }
 
-      var total = 0;
-      var h = -1;
-      var unsignedTotal = 0;
-      for (var i = 0; i < s.transactions.length; i++) {
-        var a = parseFloat(s.transactions[i].amount);
-        unsignedTotal += Math.abs(a);
-        total += s.transactions[i].type == "CREDIT" >= 0 ? a : -1 * a;
-        h = a > h ? a : h;
-      }
-      s.balance = total;
-      s.high = h;
-      s.average = unsignedTotal / s.transactions.length;
-    });
+    this.reload_data = function() {
+      $http.post("/get-transactions").then(function(res) {
+        s.transactions = res.data;
+        for (var i = 0; i < s.transactions.length; i++) {
+          s.transactions[i].date = s.transactions[i].date.substring(0, 10);
+        }
+
+        var total = 0;
+        var h = -1;
+        var unsignedTotal = 0;
+        for (var i = 0; i < s.transactions.length; i++) {
+          var a = parseFloat(s.transactions[i].amount);
+          unsignedTotal += Math.abs(a);
+          total += s.transactions[i].type == "CREDIT" >= 0 ? a : -1 * a;
+          h = a > h ? a : h;
+        }
+        s.balance = total;
+        s.high = h;
+        s.average = unsignedTotal / s.transactions.length;
+      });
+    };
+
+    this.reload_data();
 
     this.addTransaction = function() {
       $http.post("/add", this).then(
         function(res) {
-          s.transactions.push([s.date, s.description, s.amount, s.type]);
           $("#add-transaction").dialog("close");
           $("<div>Success!</div>").dialog({
             modal: true,
@@ -36,6 +40,7 @@ app.controller("HomePageController", [
             draggable: false,
             title: "The transaction was successfully inserted"
           });
+          s.reload_data();
         },
         function(err) {
           $("#add-transaction").dialog("close");

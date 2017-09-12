@@ -158,19 +158,26 @@ app.post("/add", function(req, res) {
   conn.connect(function(err) {
     if (err) {
       res.send(error(err));
-    }
-    conn.query(
-      "INSERT INTO transaction(date, description, amount, type) VALUES \
-      (?,?,?,?)",
-      [trans.date, trans.description, trans.amount, trans.type],
-      function(err, result) {
-        if (err) {
-          res.send(error(err));
-        }
+    } else {
+      conn.query(
+        "INSERT INTO transaction(date, description, amount, type, username) VALUES \
+      (?,?,?,?,?)",
+        [
+          trans.date,
+          trans.description,
+          trans.amount,
+          trans.type,
+          req.session.authorized_user
+        ],
+        function(err, result) {
+          if (err) {
+            res.send(error(err));
+          }
 
-        res.send("Success");
-      }
-    );
+          res.send("Success");
+        }
+      );
+    }
   });
 });
 
