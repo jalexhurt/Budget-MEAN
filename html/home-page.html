@@ -23,20 +23,7 @@
     <div class="col-md-10">
         <h3 class="text-center">Recent Transactions</h3>
         <div class="col-md-12" style="max-height:200px;overflow:auto;">
-            <table class="table table-hover">
-                <tr>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Type</th>
-
-                </tr>
-                <tr ng-repeat="row in ctrl.transactions">
-                    <td ng-repeat="item in row">
-                        {{item}}
-                    </td>
-                </tr>
-            </table>
+            <transaction-table></transaction-table>
         </div>
         <div class="col-md-12 text-right">
             <a href="/view-transactions">View All Transactions >></a>

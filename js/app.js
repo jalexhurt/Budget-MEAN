@@ -28,10 +28,23 @@ app.controller("HomePageController", [
     this.addTransaction = function() {
       $http.post("/add", this).then(
         function(res) {
-          alert("Success");
+          s.transactions.push([s.date, s.description, s.amount, s.type]);
+          $("#add-transaction").dialog("close");
+          $("<div>Success!</div>").dialog({
+            modal: true,
+            resizable: false,
+            draggable: false,
+            title: "The transaction was successfully inserted"
+          });
         },
         function(err) {
-          alert(err);
+          $("#add-transaction").dialog("close");
+          $("<div>Failure!</div>").dialog({
+            modal: true,
+            resizable: false,
+            draggable: false,
+            title: "The transaction failed to be added"
+          });
         }
       );
     };
@@ -49,5 +62,11 @@ app.controller("HomePageController", [
 app.directive("addTransaction", function() {
   return {
     templateUrl: "html/add-transaction-form.html"
+  };
+});
+
+app.directive("transactionTable", function() {
+  return {
+    templateUrl: "html/transaction_table.html"
   };
 });

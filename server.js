@@ -153,7 +153,25 @@ app.get("/view-transactions", function(req, res) {
 });
 
 app.post("/add", function(req, res) {
-  res.send("Done");
+  var trans = req.body.transactions[0];
+  var conn = mysql.createConnection(options);
+  conn.connect(function(err) {
+    if (err) {
+      res.send(error(err));
+    }
+    conn.query(
+      "INSERT INTO transaction(date, description, amount, type) VALUES \
+      (?,?,?,?)",
+      [trans.date, trans.description, trans.amount, trans.type],
+      function(err, result) {
+        if (err) {
+          res.send(error(err));
+        }
+
+        res.send("Success");
+      }
+    );
+  });
 });
 
 app.post("/get-transactions", function(req, res) {
