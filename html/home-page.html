@@ -3,35 +3,43 @@
     <div class="col-md-2">
         <div class="col-md-12">
             <h3>Summary</h3>
-            <ul class="col-md-offset-2 col-md-10 text-left">
-                <li>Balance: ${{ctrl.balance}}</li>
-                <li>Average: ${{ctrl.balance}}</li>
-                <li>Max: ${{ctrl.high}}</li>
-            </ul>
+            <table class="table">
+                <tr>
+                    <td>Balance</td>
+                    <td>$</td>
+                    <td>{{ctrl.balance}}</td>
+                </tr>
+                <tr>
+                    <td>Max</td>
+                    <td>$</td>
+                    <td>{{ctrl.high}}</td>
+                </tr>
+
+            </table>
         </div>
         <!-- Add Transaction -->
-        <div class="col-md-12">
+        <div class="col-md-12 ">
 
-            <h3 class="">Actions</h3>
-            <ul class="col-md-offset-2 col-md-10 text-left">
-                <li><a style="cursor: pointer" ng-click="ctrl.showAddTransaction()">Add Transaction</a></li>
+            <h3 class=" ">Actions</h3>
+            <ul class="col-md-offset-2 col-md-10 text-left ">
+                <li><a style="cursor: pointer " ng-click="ctrl.showAddTransaction() ">Add Transaction</a></li>
             </ul>
 
         </div>
     </div>
     <!-- Transactions -->
-    <div class="col-md-10">
-        <h3 class="text-center">Recent Transactions</h3>
-        <div class="col-md-12" style="max-height:200px;overflow:auto;">
+    <div class="col-md-10 ">
+        <h3 class="text-center ">Recent Transactions</h3>
+        <div class="col-md-12 " style="max-height:200px;overflow:auto; ">
             <transaction-table></transaction-table>
         </div>
-        <div class="col-md-12 text-right">
-            <a href="/view-transactions">View All Transactions >></a>
+        <div class="col-md-12 text-right ">
+            <a href="/view-transactions ">View All Transactions >></a>
         </div>
     </div>
 
 
-    <div hidden="hidden" id="add-transaction">
+    <div hidden="hidden " id="add-transaction">
         <add-transaction></add-transaction>
     </div>
 
