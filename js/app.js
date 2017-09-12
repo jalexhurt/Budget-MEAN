@@ -19,7 +19,7 @@ app.controller("HomePageController", [
         for (var i = 0; i < s.transactions.length; i++) {
           var a = parseFloat(s.transactions[i].amount);
           unsignedTotal += Math.abs(a);
-          total += s.transactions[i].type == "CREDIT" >= 0 ? a : -1 * a;
+          total += s.transactions[i].type == "CREDIT" >= 0 ? -1 * a : a;
           h = a > h ? a : h;
         }
         s.balance = total;
@@ -29,9 +29,15 @@ app.controller("HomePageController", [
     };
 
     this.reload_data();
-
+    this.toValidDate = function(d) {
+      return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+    };
     this.addTransaction = function() {
-      $http.post("/add", this).then(
+      console.log(s.date);
+      var data = {
+        data: [s.toValidDate(s.date), s.description, s.amount, s.type]
+      };
+      $http.post("/add", data).then(
         function(res) {
           $("#add-transaction").dialog("close");
           $("<div>Success!</div>").dialog({

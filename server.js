@@ -122,6 +122,7 @@ function authenticate(username, password) {
 }
 
 function error(err) {
+  console.error(err);
   return err;
 }
 
@@ -153,28 +154,23 @@ app.get("/view-transactions", function(req, res) {
 });
 
 app.post("/add", function(req, res) {
-  var trans = req.body.transactions[0];
+  var trans = req.body.data;
+  trans.push(req.session.authorized_user);
   var conn = mysql.createConnection(options);
   conn.connect(function(err) {
     if (err) {
-      res.send(error(err));
+      res.status(500).send(error(err));
     } else {
       conn.query(
         "INSERT INTO transaction(date, description, amount, type, username) VALUES \
       (?,?,?,?,?)",
-        [
-          trans.date,
-          trans.description,
-          trans.amount,
-          trans.type,
-          req.session.authorized_user
-        ],
+        trans,
         function(err, result) {
           if (err) {
-            res.send(error(err));
+            res.status(500).send(error(err));
+          } else {
+            res.send("Success");
           }
-
-          res.send("Success");
         }
       );
     }
