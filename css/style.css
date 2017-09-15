@@ -1,3 +1,7 @@
+.show-cursor {
+  cursor: pointer;
+}
+
 footer {
   width: 100%;
   text-align: center;

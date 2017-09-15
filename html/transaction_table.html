@@ -6,7 +6,7 @@
         <th>Type</th>
 
     </tr>
-    <tr ng-repeat="row in ctrl.transactions track by $index" ng-click="ctrl.editTransaction($index+1)">
+    <tr ng-repeat="row in ctrl.transactions track by $index" ng-click="ctrl.editTransaction($index+1)" class="show-cursor">
         <td ng-repeat="item in row">
             {{item}}
         </td>
