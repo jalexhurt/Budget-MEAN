@@ -1,13 +1,13 @@
 var app = angular.module("Budget", []);
 
 app.controller("HomePageController", [
-  "$http",
-  function($http) {
+  "$http", "$location", "$window",
+  function ($http, $location, $window) {
     //need to load from db
     var s = this;
 
-    this.reload_data = function() {
-      $http.post("/get-transactions").then(function(res) {
+    this.reload_data = function () {
+      $http.post("/get-transactions").then(function (res) {
         s.transactions = res.data;
         for (var i = 0; i < s.transactions.length; i++) {
           s.transactions[i].date = s.transactions[i].date.substring(0, 10);
@@ -29,16 +29,16 @@ app.controller("HomePageController", [
     };
 
     this.reload_data();
-    this.toValidDate = function(d) {
+    this.toValidDate = function (d) {
       return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
     };
-    this.addTransaction = function() {
+    this.addTransaction = function () {
       console.log(s.date);
       var data = {
         data: [s.toValidDate(s.date), s.description, s.amount, s.type]
       };
       $http.post("/add", data).then(
-        function(res) {
+        function (res) {
           $("#add-transaction").dialog("close");
           $("<div>Success!</div>").dialog({
             modal: true,
@@ -48,7 +48,7 @@ app.controller("HomePageController", [
           });
           s.reload_data();
         },
-        function(err) {
+        function (err) {
           $("#add-transaction").dialog("close");
           $("<div>Failure!</div>").dialog({
             modal: true,
@@ -59,7 +59,7 @@ app.controller("HomePageController", [
         }
       );
     };
-    this.showAddTransaction = function() {
+    this.showAddTransaction = function () {
       $("#add-transaction").dialog({
         modal: true,
         resizable: false,
@@ -67,16 +67,23 @@ app.controller("HomePageController", [
         title: "Add Transaction"
       });
     };
+
+    this.editTransaction = function (i) {
+      $window.location = $location.protocol() + "://" + $location.host() + "/edit-transaction?id=" + i;
+    }
+
   }
+
+
 ]);
 
-app.directive("addTransaction", function() {
+app.directive("addTransaction", function () {
   return {
     templateUrl: "html/add-transaction-form.html"
   };
 });
 
-app.directive("transactionTable", function() {
+app.directive("transactionTable", function () {
   return {
     templateUrl: "html/transaction_table.html"
   };

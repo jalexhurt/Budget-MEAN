@@ -43,7 +43,7 @@ app.use(
 );
 
 //login
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   if (
     (!req.session || !req.session.authorized_user) &&
     req.originalUrl.indexOf("login") == -1 &&
@@ -58,18 +58,18 @@ app.use(function(req, res, next) {
 
 https
   .createServer(
-    {
-      key: fs.readFileSync("ssl/key.pem"),
-      cert: fs.readFileSync("ssl/cert.pem")
-    },
-    app
+  {
+    key: fs.readFileSync("ssl/key.pem"),
+    cert: fs.readFileSync("ssl/cert.pem")
+  },
+  app
   )
-  .listen(443, function() {
+  .listen(443, function () {
     console.log("Server Running!");
   });
 
 http
-  .createServer(function(req, res) {
+  .createServer(function (req, res) {
     res.writeHead(302, { Location: "https://" + req.headers.host + "/" });
     res.end();
   })
@@ -102,14 +102,14 @@ function send_html_file(file) {
 function authenticate(username, password) {
   var dfd = Q.defer();
   var conn = mysql.createConnection(options);
-  conn.connect(function(err) {
+  conn.connect(function (err) {
     if (err) {
       dfd.resolve(false);
     }
     conn.query(
       "SELECT * FROM users WHERE username = ? and password = ?",
       [username, password],
-      function(err, result) {
+      function (err, result) {
         if (err) {
           dfd.resolve(false);
         }
@@ -130,16 +130,16 @@ function error(err) {
  * ROUTING
  **********************************/
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.send(send_html_file("home-page"));
 });
 
-app.get("/login", function(req, res) {
+app.get("/login", function (req, res) {
   res.send(send_html_file("login"));
 });
 
-app.post("/login", function(req, res) {
-  authenticate(req.body.username, req.body.password).then(function(valid) {
+app.post("/login", function (req, res) {
+  authenticate(req.body.username, req.body.password).then(function (valid) {
     if (valid) {
       req.session.authorized_user = req.body.username;
       res.redirect("/");
@@ -149,15 +149,15 @@ app.post("/login", function(req, res) {
   });
 });
 
-app.get("/view-transactions", function(req, res) {
+app.get("/view-transactions", function (req, res) {
   res.send(send_html_file("transactions"));
 });
 
-app.post("/add", function(req, res) {
+app.post("/add", function (req, res) {
   var trans = req.body.data;
   trans.push(req.session.authorized_user);
   var conn = mysql.createConnection(options);
-  conn.connect(function(err) {
+  conn.connect(function (err) {
     if (err) {
       res.status(500).send(error(err));
     } else {
@@ -165,7 +165,7 @@ app.post("/add", function(req, res) {
         "INSERT INTO transaction(date, description, amount, type, username) VALUES \
       (?,?,?,?,?)",
         trans,
-        function(err, result) {
+        function (err, result) {
           if (err) {
             res.status(500).send(error(err));
           } else {
@@ -177,16 +177,16 @@ app.post("/add", function(req, res) {
   });
 });
 
-app.post("/get-transactions", function(req, res) {
+app.post("/get-transactions", function (req, res) {
   var conn = mysql.createConnection(options);
-  conn.connect(function(err) {
+  conn.connect(function (err) {
     if (err) {
       res.send(error(err));
     }
     conn.query(
       "SELECT date(date) as date, description, amount, type FROM transaction WHERE username = ?",
       [req.session.authorized_user],
-      function(err, result) {
+      function (err, result) {
         if (err) {
           res.send(error(err));
         }
@@ -195,3 +195,24 @@ app.post("/get-transactions", function(req, res) {
     );
   });
 });
+
+app.get("/edit-transaction", function (req, res) {
+  var conn = mysql.createConnection(options);
+  conn.connect(function (err) {
+    if (err) {
+      res.send(error(err));
+    }
+    conn.query(
+      "SELECT date(date) as date, description, amount, type FROM transaction WHERE username = ? AND id = ?",
+      [req.session.authorized_user, req.query.id],
+      function (err, result) {
+        if (err || result.length < 1) {
+          res.status(500).send(error(err));
+        }
+        else {
+          res.send(get_response(pug.renderFile("pug/edit-transaction.pug", { transaction: result[0] })))
+        }
+      }
+    );
+  });
+})
