@@ -25,6 +25,10 @@ app.controller("HomePageController", [
         s.balance = total;
         s.high = h;
         s.average = unsignedTotal / s.transactions.length;
+
+        if (s.transactions.length == 0) {
+          s.balance = s.high = s.average = 0;
+        }
       });
     };
 
