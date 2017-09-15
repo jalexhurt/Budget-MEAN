@@ -19,7 +19,7 @@ app.controller("HomePageController", [
         for (var i = 0; i < s.transactions.length; i++) {
           var a = parseFloat(s.transactions[i].amount);
           unsignedTotal += Math.abs(a);
-          total += s.transactions[i].type == "CREDIT" ? -1 * a : a;
+          total += s.transactions[i].type == "CREDIT" ? a : -1 * a;
           h = a > h ? a : h;
         }
         s.balance = total;
