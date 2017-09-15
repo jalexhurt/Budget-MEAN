@@ -48,7 +48,8 @@ app.use(function (req, res, next) {
     (!req.session || !req.session.authorized_user) &&
     req.originalUrl.indexOf("login") == -1 &&
     req.originalUrl.indexOf(".css") == -1 &&
-    req.originalUrl.indexOf(".js") == -1
+    req.originalUrl.indexOf(".js") == -1 &&
+    req.originalUrl.indexOf("create") == -1
   ) {
     res.redirect("/login");
   } else {

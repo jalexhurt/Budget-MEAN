@@ -13,5 +13,24 @@
                 <button type="submit" name="login_submit" class="btn btn-primary">Login</button>
             </div>
         </form>
+
+        <a onclick="showDialog('create-account')" class="btn btn-link">Create Account</a>
+
+        <div hidden="hidden" id="create-account" ng-controller="createAccountController as ctrl">
+            <H3>Create Account</H3>
+            <form ng-submit="ctrl.submitForm()" class="form">
+                <label class="control-label">Username</label>
+                <input class="form-control" />
+
+                <label class="control-label">Password</label>
+                <input class="form-control" type="password" />
+
+                <label class="control-label">Confirm Password </label>
+                <input class="form-control" type="password" />
+
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+
     </div>
 </div>

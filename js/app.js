@@ -91,4 +91,24 @@ app.directive("transactionTable", function () {
   return {
     templateUrl: "html/transaction_table.html"
   };
+
+
 });
+
+app.controller("createAccountController", function () {
+  this.submitForm = function () {
+    alert("Submit! Needs Work")
+  }
+})
+
+/**********************************************************************************
+ * GENERAL PURPOSE
+ */
+
+function showDialog(id) {
+  $('#' + id).dialog({
+    modal: true,
+    resizable: false,
+    draggable: false,
+  })
+}
