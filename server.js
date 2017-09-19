@@ -185,7 +185,7 @@ app.post("/get-transactions", function (req, res) {
       res.send(error(err));
     }
     conn.query(
-      "SELECT date(date) as date, description, amount, type FROM transaction WHERE username = ?",
+      "SELECT date(date) as date, description, amount, type, id FROM transaction WHERE username = ?",
       [req.session.authorized_user],
       function (err, result) {
         if (err) {

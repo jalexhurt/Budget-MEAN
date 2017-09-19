@@ -9,8 +9,10 @@ app.controller("HomePageController", [
     this.reload_data = function () {
       $http.post("/get-transactions").then(function (res) {
         s.transactions = res.data;
+        s.first_id = res.data[0].id;
         for (var i = 0; i < s.transactions.length; i++) {
           s.transactions[i].date = s.transactions[i].date.substring(0, 10);
+          delete s.transactions[i].id;
         }
 
         var total = 0;
@@ -73,7 +75,8 @@ app.controller("HomePageController", [
     };
 
     this.editTransaction = function (i) {
-      $window.location = $location.protocol() + "://" + $location.host() + "/edit-transaction?id=" + i;
+      // console.log(i)
+      $window.location = $location.protocol() + "://" + $location.host() + "/edit-transaction?id=" + (this.first_id+i-1);
     }
 
   }

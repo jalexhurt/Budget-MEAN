@@ -3,7 +3,11 @@ div.container
     br
     br
     form.form
+        label.control-label Date
+        input(disabled value=transaction.date).form-control    
         label.control-label Description
         input(disabled value=transaction.description).form-control
         label.control-label Amount
         input(disabled value=transaction.amount).form-control
+        label.control-label Type
+        input(disabled value=transaction.type).form-control
