@@ -213,7 +213,7 @@ app.get("/edit-transaction", function (req, res) {
                 }
                 else {
                     result[0].date = result[0].date.toISOString().substring(0, 10);
-                    res.send(get_response(pug.renderFile("pug/edit-transaction.pug", {transaction: result[0]})))
+                    res.send(get_response(pug.renderFile("pug/edit-transaction.pug", {transaction: result[0], id : req.query.id})))
                 }
             }
         );
@@ -221,5 +221,10 @@ app.get("/edit-transaction", function (req, res) {
 });
 
 app.post("/update", function(req, res) {
-    res.send("Sent!")
+    var id = req.body.id;
+    var new_date = req.body.new_date;
+    var new_desc = req.body.new_description;
+    var new_amount = req.body.new_amount;
+
+    res.send("Collected");
 });

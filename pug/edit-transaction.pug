@@ -3,17 +3,18 @@ div.container
     br
     br
     form(action="/update" method="post").form
+        input(type='hidden' name='id' value=id)
         div.form-group
             label.control-label Date
-            input(type='date' value=transaction.date required).form-control
+            input(type='date' value=transaction.date name='new_date' required).form-control
         div.form-group
             label.control-label Description
-            input(value=transaction.description required).form-control
+            input(value=transaction.description name='new_description' required).form-control
         div.form-group
             label.control-label Amount
-            input(type='number' min='0.01' step='.01' value=transaction.amount required).form-control
+            input(type='number' min='0.01' step='.01' value=transaction.amount name='new_amount' required).form-control
         div.form-group
             label.control-label Type
-            input(value=transaction.type disabled).form-control
+            input(value=transaction.type disabled name='new_type').form-control
         div.form-group
             button(type='submit').btn.btn-primary Update
