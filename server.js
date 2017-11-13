@@ -202,7 +202,7 @@ app.get("/edit-transaction", function (req, res) {
     var conn = mysql.createConnection(options);
     conn.connect(function (err) {
         if (err) {
-            res.send(error(err));
+            res.status(500).send(error(err));
         }
         conn.query(
             "SELECT date(date) as date, description, amount, type FROM transaction WHERE username = ? AND id = ?",
@@ -226,5 +226,22 @@ app.post("/update", function(req, res) {
     var new_desc = req.body.new_description;
     var new_amount = req.body.new_amount;
 
-    res.send("Collected");
+    var conn = mysql.createConnection(options);
+    conn.connect(function (err) {
+        if (err) {
+            res.status(500).send(error(err));
+        }
+        conn.query(
+            "UPDATE transaction SET date = ?, description = ?, amount = ? WHERE username = ? AND id = ?",
+            [new_date, new_desc, new_amount, req.session.authorized_user, id],
+            function (err, result) {
+                if (err || result.length < 1) {
+                    res.status(500).send(error(err));
+                }
+                else {
+                    res.send(get_response(pug.renderFile("pug/success.pug")))
+                }
+            }
+        );
+    });
 });
