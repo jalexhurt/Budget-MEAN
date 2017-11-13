@@ -27,7 +27,8 @@ var options = {
     port: 3306,
     user: "webuser",
     password: "Buget_123",
-    database: "budget"
+    database: "budget",
+    dateStrings: 'date'
 };
 
 var sessionStore = new MySQLStore(options);
