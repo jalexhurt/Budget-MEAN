@@ -28,13 +28,14 @@
             <h3 class=" ">Actions</h3>
             <ul class="col-md-offset-2 col-md-10 text-left ">
                 <li><a style="cursor: pointer " ng-click="ctrl.showAddTransaction() ">Add Transaction</a></li>
+                <li><a style="cursor: pointer " ng-click="ctrl.showDeleteTransaction() ">Delete Transaction</a></li>
             </ul>
 
         </div>
     </div>
     <!-- Transactions -->
     <div class="col-md-10 ">
-        <h3 class="text-center ">Recent Transactions</h3>
+        <h3 class="text-center">Recent Transactions</h3>
         <div class="col-md-12 " style="max-height:200px;overflow:auto; ">
             <transaction-table></transaction-table>
         </div>
@@ -46,6 +47,10 @@
 
     <div hidden="hidden " id="add-transaction">
         <add-transaction></add-transaction>
+    </div>
+
+    <div hidden="hidden" id="delete-transaction">
+        <delete-transaction></delete-transaction>
     </div>
 
 </div>

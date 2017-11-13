@@ -1,0 +1,12 @@
+<form name="deleteTransaction" class="form" ng-submit="ctrl.deleteTransaction()">
+    <div class="form-group">
+        <label class="control-label">Choose a Transaction: </label>
+        <select class="form-control" required ng-model="ctrl.transDelete">
+            <option ng-repeat="t in ctrl.transactions track by $index" value="{{$index}}">{{t.description}}</option>
+        </select>
+    </div>
+    <div class="form-group" required>
+        <button class="btn btn-primary" type="submit" ng-disabled="!deleteTransaction.$valid">Submit</button>
+    </div>
+
+</form>

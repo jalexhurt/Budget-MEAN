@@ -245,3 +245,28 @@ app.post("/update", function(req, res) {
         );
     });
 });
+
+
+app.post("/delete-transaction", function(req, res) {
+    var desc = req.body[0].description;
+    var date = req.body[0].date;
+    var amt = req.body[0].amount;
+    var conn = mysql.createConnection(options);
+    conn.connect(function (err) {
+        if (err) {
+            res.status(500).send(error(err));
+        }
+        conn.query(
+            "DELETE FROM transaction WHERE description = ? AND amount = ? AND username = ?",
+            [desc, amt, req.session.authorized_user],
+            function (err, result) {
+                if (err || result.length < 1) {
+                    res.status(500).send(error(err));
+                }
+                else {
+                    res.send("Success")
+                }
+            }
+        );
+    });
+});
