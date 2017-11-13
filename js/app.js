@@ -37,7 +37,7 @@ app.controller("HomePageController", [
             if (s.transactions.length == 0) {
                 s.balance = s.high = s.average = 0;
             }
-        }
+        };
         this.reload_data();
         this.toValidDate = function (d) {
             return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
@@ -115,8 +115,16 @@ app.controller("HomePageController", [
         this.editTransaction = function (i) {
             // console.log(i)
             $window.location = $location.protocol() + "://" + $location.host() + "/edit-transaction?id=" + (this.first_id + i - 1);
-        }
+        };
 
+        this.show_graph = function() {
+            var a = [];
+
+            this.transactions.forEach(function(t) {
+                a.push(t.amount);
+            });
+            create_graph(a, "test-id");
+        }
     }
 
 

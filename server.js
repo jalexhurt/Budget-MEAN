@@ -29,7 +29,7 @@ var options = {
     user: "webuser",
     password: "Buget_123",
     database: "budget",
-    dateStrings: 'date'
+    dateStrings: "date"
 };
 
 var sessionStore = new MySQLStore(options);
@@ -188,7 +188,7 @@ app.post("/get-transactions", function (req, res) {
             res.send(error(err));
         }
         conn.query(
-            "SELECT date(date) as date, description, amount, type, id FROM transaction WHERE username = ?",
+            "SELECT date as date, description, amount, type, id FROM transaction WHERE username = ?",
             [req.session.authorized_user],
             function (err, result) {
                 if (err) {
@@ -207,14 +207,13 @@ app.get("/edit-transaction", function (req, res) {
             res.status(500).send(error(err));
         }
         conn.query(
-            "SELECT date(date) as date, description, amount, type FROM transaction WHERE username = ? AND id = ?",
+            "SELECT date as date, description, amount, type FROM transaction WHERE username = ? AND id = ?",
             [req.session.authorized_user, req.query.id],
             function (err, result) {
                 if (err || result.length < 1) {
                     res.status(500).send(error(err));
                 }
                 else {
-                    result[0].date = result[0].date.toISOString().substring(0, 10);
                     res.send(get_response(pug.renderFile("pug/edit-transaction.pug", {transaction: result[0], id : req.query.id})))
                 }
             }
@@ -274,11 +273,5 @@ app.post("/delete-transaction", function(req, res) {
 });
 
 app.get("/hi", function(req, res) {
-    var data = [{x:[0,1,2], y:[3,2,1], type: 'bar'}];
-    var layout = {fileopt : "overwrite", filename : "simple-node-example"};
-
-    plotly.plot(data, layout, function (err, msg) {
-        if (err) return console.log(err);
-        console.log(msg);
-    });
+    res.send(send_html_file("charts"))
 });
