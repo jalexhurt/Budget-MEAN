@@ -212,9 +212,14 @@ app.get("/edit-transaction", function (req, res) {
                     res.status(500).send(error(err));
                 }
                 else {
+                    result[0].date = result[0].date.toISOString().substring(0, 10);
                     res.send(get_response(pug.renderFile("pug/edit-transaction.pug", {transaction: result[0]})))
                 }
             }
         );
     });
-})
+});
+
+app.post("/update", function(req, res) {
+    res.send("Sent!")
+});

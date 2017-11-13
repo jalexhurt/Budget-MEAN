@@ -2,12 +2,18 @@ div.container
     a(href="/") < Go Back
     br
     br
-    form.form
-        label.control-label Date
-        input(disabled value=transaction.date).form-control    
-        label.control-label Description
-        input(disabled value=transaction.description).form-control
-        label.control-label Amount
-        input(disabled value=transaction.amount).form-control
-        label.control-label Type
-        input(disabled value=transaction.type).form-control
+    form(action="/update" method="post").form
+        div.form-group
+            label.control-label Date
+            input(type='date' value=transaction.date required).form-control
+        div.form-group
+            label.control-label Description
+            input(value=transaction.description required).form-control
+        div.form-group
+            label.control-label Amount
+            input(type='number' min='0.01' step='.01' value=transaction.amount required).form-control
+        div.form-group
+            label.control-label Type
+            input(value=transaction.type disabled).form-control
+        div.form-group
+            button(type='submit').btn.btn-primary Update
