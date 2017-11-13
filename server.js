@@ -272,6 +272,6 @@ app.post("/delete-transaction", function(req, res) {
     });
 });
 
-app.get("/hi", function(req, res) {
+app.get("/visualize", function(req, res) {
     res.send(send_html_file("charts"))
 });
