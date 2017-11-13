@@ -13,6 +13,7 @@ var https = require("https");
 var http = require("http");
 var mysql = require("mysql");
 var Q = require("q");
+var plotly = require('plotly')('hurtja','jcHRLm0kabxY0uXS9QlG');
 
 /************************************
  * ExpressJS Setup
@@ -269,5 +270,15 @@ app.post("/delete-transaction", function(req, res) {
                 }
             }
         );
+    });
+});
+
+app.get("/hi", function(req, res) {
+    var data = [{x:[0,1,2], y:[3,2,1], type: 'bar'}];
+    var layout = {fileopt : "overwrite", filename : "simple-node-example"};
+
+    plotly.plot(data, layout, function (err, msg) {
+        if (err) return console.log(err);
+        console.log(msg);
     });
 });
