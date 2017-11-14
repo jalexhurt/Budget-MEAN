@@ -125,6 +125,29 @@ app.controller("HomePageController", [
             });
             create_graph(a, "test-id");
         }
+
+        this.submitVisualize = function() {
+            this.reload_data();
+            var today = new Date();
+            var days = 0;
+            var num = parseInt(this.num);
+            if(this.length == "months") {
+                days = num * 30;
+            }
+            else if (this.length == "weeks") {
+                days = num * 7;
+            }
+            else {
+                days = num;
+            }
+
+            var newDay = new Date();
+            while(Math.ceil(Math.abs(today.getTime() - newDay.getTime()) / (1000 * 3600 * 24)) < days) {
+                newDay.setDate(newDay.getDate()-1);
+            }
+
+            this.prevDate = newDay.toLocaleString();
+        }
     }
 
 
