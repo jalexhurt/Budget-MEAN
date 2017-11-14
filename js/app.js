@@ -146,7 +146,29 @@ app.controller("HomePageController", [
                 newDay.setDate(newDay.getDate()-1);
             }
 
-            this.prevDate = newDay.toLocaleString();
+            var data = [];
+            for(var i =0; i < this.transactions.length; i++) {
+                var temp_date = this.transactions[i].date + "";
+                var year = parseInt(temp_date.substring(0,4));
+                var month = parseInt(temp_date.substring(5,7));
+                var day = parseInt(temp_date.substring(8));
+
+                var d = new Date(year, month, day, 0, 0, 0);
+                if(d >= newDay && d <= today) {
+                    data.push(parseFloat(this.transactions[i].amount));
+                }
+            }
+
+            if(data.length > 0) {
+                create_graph(data, 'chart');
+            } else {
+                $("<div>No transactions occurred in the time specified</div>").dialog({
+                    modal:true,
+                    draggable: false,
+                    title: "Not Found",
+                    resizable: false
+                })
+            }
         }
     }
 
