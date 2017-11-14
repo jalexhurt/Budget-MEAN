@@ -1,6 +1,17 @@
-
 <div class="container" ng-controller="HomePageController as ctrl">
     <h3 class="text-center">Budget Visualizer</h3>
-    <div id="test-id"></div>
-    <button ng-click="ctrl.show_graph()" class="btn btn-primary">Show Graph</button>
+    <form ng-submit="ctrl.submitVisualize()" class="form">
+        <div class="form-group">
+            <label class="control-label">View statistics of my transactions over the last </label>
+            <input type="number" min="1" step="1" ng-model="num" />
+            <select class="form-control">
+                <option>days</option>
+                <option>weeks</option>
+                <option>months</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
 </div>
