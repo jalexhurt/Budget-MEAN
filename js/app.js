@@ -20,14 +20,14 @@ app.controller("HomePageController", [
             });
         };
 
-        this.load_stats = function() {
+        this.load_stats = function () {
             var total = 0;
             var h = -1;
             var unsignedTotal = 0;
             for (var i = 0; i < s.transactions.length; i++) {
                 var a = parseFloat(s.transactions[i].amount);
                 unsignedTotal += Math.abs(a);
-                total += s.transactions[i].type == "CREDIT" ? a : -1 * a;
+                total += s.transactions[i].type.toUpperCase() == "CREDIT" ? a : -1 * a;
                 h = a > h ? a : h;
             }
             s.balance = total;
@@ -114,24 +114,24 @@ app.controller("HomePageController", [
 
         this.editTransaction = function (i) {
             // console.log(i)
-            $window.location = $location.protocol() + "://" + $location.host() + "/edit-transaction?id=" + (this.first_id + i - 1);
+            $window.location = "/edit-transaction?id=" + (this.first_id + i - 1);
         };
 
-        this.show_graph = function() {
+        this.show_graph = function () {
             var a = [];
 
-            this.transactions.forEach(function(t) {
+            this.transactions.forEach(function (t) {
                 a.push(t.amount);
             });
             create_graph(a, "test-id");
         }
 
-        this.submitVisualize = function() {
+        this.submitVisualize = function () {
             this.reload_data();
             var today = new Date();
             var days = 0;
             var num = parseInt(this.num);
-            if(this.length == "months") {
+            if (this.length == "months") {
                 days = num * 30;
             }
             else if (this.length == "weeks") {
@@ -142,28 +142,58 @@ app.controller("HomePageController", [
             }
 
             var newDay = new Date();
-            while(Math.ceil(Math.abs(today.getTime() - newDay.getTime()) / (1000 * 3600 * 24)) < days) {
-                newDay.setDate(newDay.getDate()-1);
+            while (Math.ceil(Math.abs(today.getTime() - newDay.getTime()) / (1000 * 3600 * 24)) < days) {
+                newDay.setDate(newDay.getDate() - 1);
             }
 
             var data = [];
-            for(var i =0; i < this.transactions.length; i++) {
+            for (var i = 0; i < this.transactions.length; i++) {
                 var temp_date = this.transactions[i].date + "";
-                var year = parseInt(temp_date.substring(0,4));
-                var month = parseInt(temp_date.substring(5,7));
+                var year = parseInt(temp_date.substring(0, 4));
+                var month = parseInt(temp_date.substring(5, 7));
                 var day = parseInt(temp_date.substring(8));
 
                 var d = new Date(year, month, day, 0, 0, 0);
-                if(d >= newDay && d <= today) {
+                if (d >= newDay && d <= today) {
                     data.push(parseFloat(this.transactions[i].amount));
                 }
             }
 
-            if(data.length > 0) {
+            if (data.length > 0) {
                 create_graph(data, 'chart');
             } else {
                 $("<div>No transactions occurred in the time specified</div>").dialog({
-                    modal:true,
+                    modal: true,
+                    draggable: false,
+                    title: "Not Found",
+                    resizable: false
+                })
+            }
+        };
+
+
+        this.submitVisualizeTwoDates = function () {
+            var date1 = this.date1;
+            var date2 = this.date2;
+            this.reload_data();
+            var data = [];
+            for (var i = 0; i < this.transactions.length; i++) {
+                var temp_date = this.transactions[i].date + "";
+                var year = parseInt(temp_date.substring(0, 4));
+                var month = parseInt(temp_date.substring(5, 7));
+                var day = parseInt(temp_date.substring(8));
+
+                var d = new Date(year, month, day, 0, 0, 0);
+                if (d >= date1 && d <= date2) {
+                    data.push(parseFloat(this.transactions[i].amount));
+                }
+            }
+
+            if (data.length > 0) {
+                create_graph(data, 'chart');
+            } else {
+                $("<div>No transactions occurred in the time specified</div>").dialog({
+                    modal: true,
                     draggable: false,
                     title: "Not Found",
                     resizable: false
@@ -171,7 +201,6 @@ app.controller("HomePageController", [
             }
         }
     }
-
 
 ]);
 
