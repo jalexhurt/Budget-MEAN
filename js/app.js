@@ -152,8 +152,8 @@ app.controller("HomePageController", [
                 var year = parseInt(temp_date.substring(0, 4));
                 var month = parseInt(temp_date.substring(5, 7));
                 var day = parseInt(temp_date.substring(8));
-
-                var d = new Date(year, month, day, 0, 0, 0);
+                var new_date = year + "-" + month + "-" + day;
+                var d = Date.parse(new_date);
                 if (d >= newDay && d <= today) {
                     data.push(parseFloat(this.transactions[i].amount));
                 }
@@ -182,8 +182,8 @@ app.controller("HomePageController", [
                 var year = parseInt(temp_date.substring(0, 4));
                 var month = parseInt(temp_date.substring(5, 7));
                 var day = parseInt(temp_date.substring(8));
-
-                var d = new Date(year, month, day, 0, 0, 0);
+                var new_date = year + "-" + month + "-" + day;
+                var d = Date.parse(new_date);
                 if (d >= date1 && d <= date2) {
                     data.push(parseFloat(this.transactions[i].amount));
                 }

@@ -1,11 +1,11 @@
 // Create data array of values to visualize
 function create_graph(data, id) {
     var dataArray = data
-
+    $("#" + id).html("");
 // Create variable for the SVG
     var svg = d3.select("#" + id).append("svg")
-        .attr("height", "100%")
-        .attr("width", "100%");
+        .attr("height", "400px")
+        .attr("width", "500px");
 
 // Select, append to SVG, and add attributes to rectangles for bar chart
     svg.selectAll("rect")
