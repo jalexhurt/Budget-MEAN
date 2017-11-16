@@ -13,7 +13,6 @@ var https = require("https");
 var http = require("http");
 var mysql = require("mysql");
 var Q = require("q");
-var plotly = require('plotly')('hurtja','jcHRLm0kabxY0uXS9QlG');
 
 /************************************
  * ExpressJS Setup
