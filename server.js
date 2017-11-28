@@ -260,3 +260,29 @@ app.post("/delete-transaction", function(req, res) {
 app.get("/visualize", function(req, res) {
     res.send(send_html_file("charts"))
 });
+
+app.post("/createaccount", function(req, res) {
+    var conn = mysql.createConnection(options);
+    conn.connect(function (err) {
+        if (err) {
+            res.status(500).send(error(err));
+        }
+        conn.query(
+            "INSERT INTO users(username, password) VALUES(?,?)",
+            [req.body.username, req.body.password],
+            function (err, result) {
+                if (err || result.length < 1) {
+                    res.status(500).send(error(err));
+                }
+                else {
+                    res.send("Success")
+                }
+            }
+        );
+    });
+})
+
+app.get("/logout", function(req, res) {
+    req.session.authorized_user = null;
+    res.redirect("/");
+})

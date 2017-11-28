@@ -1,5 +1,12 @@
 var app = angular.module("Budget", []);
 
+var basic_dialog = 
+{
+        modal: true,
+        resizable: false,
+        draggable: false,
+};
+
 app.controller("HomePageController", [
     "$http", "$location", "$window",
     function ($http, $location, $window) {
@@ -222,20 +229,31 @@ app.directive("deleteTransaction", function () {
     };
 });
 
-app.controller("createAccountController", function () {
+app.controller("createAccountController", ['$http', function ($http) {
     this.submitForm = function () {
-        alert("Submit! Needs Work")
+        var username = this.username;
+        var password = this.password;
+        var confirm = this.confirm;
+
+        $("#create-account").dialog('close');
+                
+        if(!username || !password || !confirm || password != confirm) {
+            $("<div>Invalid Form!</div>").dialog(basic_dialog)            
+        }
+        else {
+            $http.post("/createaccount", {username: username, password: password}).then(function(res) {
+                $("<div>Success!<br>The account was created</div>").dialog(basic_dialog);
+            }, function(err) {
+                $("<div>Error! An error occurred</div>").dialog(basic_dialog);
+            })
+        }
     }
-})
+}])
 
 /**********************************************************************************
  * GENERAL PURPOSE
  */
 
 function showDialog(id) {
-    $('#' + id).dialog({
-        modal: true,
-        resizable: false,
-        draggable: false,
-    })
+    $('#' + id).dialog(basic_dialog)
 }
