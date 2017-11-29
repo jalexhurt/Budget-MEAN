@@ -5,34 +5,59 @@
             <a href="/" class="btn btn-link col-md-12">&lt; Go Back</a>
         </div>
     </div>
-    <form ng-submit="ctrl.submitVisualize()" class="form form-inline">
+    <form ng-submit="ctrl.submitVisualize()" class="form">
         <div class="form-group">
-            <label class="control-label">View statistics of my transactions over the last </label>
-            <input type="number" min="1" step="1" ng-model="ctrl.num" class="form-control" required />
-            <select class="form-control" ng-model="ctrl.length" required>
-                <option>days</option>
-                <option>weeks</option>
-                <option>months</option>
-            </select>
+            <label class="control-label">View statistics of transactions made in the last... </label>
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <input type="number" min="1" step="1" ng-model="ctrl.num" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control" ng-model="ctrl.length" required>
+                        <option>days</option>
+                        <option>weeks</option>
+                        <option>months</option>
+                    </select>
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div style="margin-top:15px;margin-left:15px;margin-bottom:15px" class="col-md-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </div>
     </form>
 
-    <form ng-submit="ctrl.submitVisualizeTwoDates()" class="form form-inline">
+    <form ng-submit="ctrl.submitVisualizeTwoDates()" class="form">
         <div class="form-group">
             <label class="control-label">View statistics of my transactions between </label>
-            <input type="date" class="form-control" ng-model="ctrl.date1" required />
-            and
-            <input type="date" class="form-control" ng-model="ctrl.date2" required />
+            <div class="col-md-12">
+                <div class="col-md-5 text-center">
+                    <input type="date" class="form-control" ng-model="ctrl.date1" required />
+                </div>
+                <div class="col-md-2 text-center">
+                    AND
+                </div>
+                <div class="col-md-5 text-center">
+
+                    <input type="date" class="form-control" ng-model="ctrl.date2" required />
+                </div>
+            </div>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div style="margin-top:15px;margin-left:15px;margin-bottom:15px" class="col-md-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </div>
     </form>
 
-    <div id="chart" class="col-md-4" style="max-height: 400px;">
+    <div id="chart-popup" hidden="hidden">
+        <div class="col-md-6">
+            <div id="chart"></div>
+        </div>
+        <div class="col-md-offset-2 col-md-4">
 
+        </div>
     </div>
 </div>
