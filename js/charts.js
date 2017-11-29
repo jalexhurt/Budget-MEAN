@@ -1,40 +1,51 @@
-// Create data array of values to visualize
+// Create data -array of values to visualize
 function create_graph(data, id) {
-    var dataArray = data
+    var dataset = data
     $("#" + id).html("");
-// Create variable for the SVG
-    var svg = d3.select("#" + id).append("svg")
-        .attr("height", "400px")
-        .attr("width", "500px");
+    var w = 500;
+    var h = 100;
+    var barPadding = 1;
 
-// Select, append to SVG, and add attributes to rectangles for bar chart
+    //Create SVG element
+    var svg = d3.select("#" + id)
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
     svg.selectAll("rect")
-        .data(dataArray)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("height", function (d, i) {
-            return (d * 10)
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) {
+            return i * (w / dataset.length);
         })
-        .attr("width", "40")
-        .attr("x", function (d, i) {
-            return (i * 60) + 25
+        .attr("y", function(d) {
+            return h - (d * 4);
         })
-        .attr("y", function (d, i) {
-            return 400 - (d * 10)
+        .attr("width", w / dataset.length - barPadding)
+        .attr("height", function(d) {
+            return d * 4;
+        })
+        .attr("fill", function(d) {
+            return "rgb(0, 0, " + (d * 10) + ")";
         });
 
-// Select, append to SVG, and add attributes to text
     svg.selectAll("text")
-        .data(dataArray)
-        .enter().append("text")
-        .text(function (d) {
-            return d
+        .data(dataset)
+        .enter()
+        .append("text")
+        .text(function(d) {
+            return d;
         })
-        .attr("class", "text")
-        .attr("x", function (d, i) {
-            return (i * 60) + 36
+        .attr("text-anchor", "middle")
+        .attr("x", function(d, i) {
+            return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
         })
-        .attr("y", function (d, i) {
-            return 415 - (d * 10)
-        });
+        .attr("y", function(d) {
+            return h - (d * 4) + 14;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "11px")
+        .attr("fill", "white");
+
 }
