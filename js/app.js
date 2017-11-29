@@ -190,11 +190,7 @@ app.controller("HomePageController", [
     this.stats = [];
     this.getStatistics = function() {
       this.stats = [];
-      var data = this.stat_transactions;
-      var amts = [];
-      data.forEach(function(t) {
-        amts.push(t.amount);
-      });
+      var amts = this.stat_transactions;
 
       // average
       var total = 0.0;
