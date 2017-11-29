@@ -209,6 +209,7 @@ app.get("/edit-transaction", function (req, res) {
 app.post("/update", function(req, res) {
     var id = req.body.id;
     var new_date = req.body.new_date;
+    console.log(new_date);
     var new_desc = req.body.new_description;
     var new_amount = req.body.new_amount;
 

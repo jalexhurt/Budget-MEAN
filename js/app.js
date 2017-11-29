@@ -47,10 +47,10 @@ app.controller("HomePageController", [
         };
         this.reload_data();
         this.toValidDate = function (d) {
-            return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+            return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
         };
         this.addTransaction = function () {
-            console.log(s.date);
+
             var data = {
                 data: [s.toValidDate(s.date), s.description, s.amount, s.type]
             };
