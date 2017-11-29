@@ -13,7 +13,7 @@ app.controller("HomePageController", [
   function($http, $location, $window) {
     //need to load from db
     var s = this;
-
+    this.stat_transactions = [];
     this.reload_data = function() {
       $http.post("/get-transactions").then(function(res) {
         s.transactions = res.data;
@@ -175,6 +175,8 @@ app.controller("HomePageController", [
         settings.width = "90%";
         settings.title = "Transaction Statistics";
         $("#chart-popup").dialog(basic_dialog);
+        this.stat_transactions = data;
+        this.getStatistics();
         create_graph(data, "chart");
       } else {
         $("<div>No transactions occurred in the time specified</div>").dialog({
@@ -184,6 +186,24 @@ app.controller("HomePageController", [
           resizable: false
         });
       }
+    };
+    this.stats = [];
+    this.getStatistics = function() {
+      this.stats = [];
+      var data = this.stat_transactions;
+      var amts = [];
+      data.forEach(function(t) {
+        amts.push(t.amount);
+      });
+
+      // average
+      var total = 0.0;
+      amts.forEach(function(a) {
+        total += a;
+      });
+
+      var avg = total / amts.length;
+      this.stats.push({ title: "Average", value: avg });
     };
 
     this.submitVisualizeTwoDates = function() {
@@ -204,6 +224,12 @@ app.controller("HomePageController", [
       }
 
       if (data.length > 0) {
+        var settings = basic_dialog;
+        settings.width = "90%";
+        settings.title = "Transaction Statistics";
+        $("#chart-popup").dialog(basic_dialog);
+        this.stat_transactions = data;
+        this.getStatistics();
         create_graph(data, "chart");
       } else {
         $("<div>No transactions occurred in the time specified</div>").dialog({

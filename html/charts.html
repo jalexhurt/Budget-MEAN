@@ -57,7 +57,10 @@
             <div id="chart"></div>
         </div>
         <div class="col-md-offset-2 col-md-4">
-
+            <h3 class="col-md-12 text-center">Transaction Statistics</h3>
+            <ul>
+                <li ng-repeat="stat in ctrl.stats">{{stat.title}}: ${{stat.value}}</li>
+            </ul>
         </div>
     </div>
 </div>
