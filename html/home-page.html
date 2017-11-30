@@ -7,17 +7,17 @@
                 <tr>
                     <td>Balance</td>
                     <td>$</td>
-                    <td>{{ctrl.balance}}</td>
+                    <td>{{ctrl.balance.toFixed(2)}}</td>
                 </tr>
                 <tr>
                     <td>Average</td>
                     <td>$</td>
-                    <td>{{ctrl.average}}</td>
+                    <td>{{ctrl.average.toFixed(2)}}</td>
                 </tr>
                 <tr>
                     <td>Max</td>
                     <td>$</td>
-                    <td>{{ctrl.high}}</td>
+                    <td>{{ctrl.high.toFixed(2)}}</td>
                 </tr>
 
             </table>
@@ -27,8 +27,12 @@
 
             <h3 class=" ">Options</h3>
             <ul class="col-md-offset-2 col-md-10 text-left ">
-                <li><a style="cursor: pointer " ng-click="ctrl.showAddTransaction() ">Add Transaction</a></li>
-                <li><a style="cursor: pointer " ng-click="ctrl.showDeleteTransaction() ">Delete Transaction</a></li>
+                <li>
+                    <a style="cursor: pointer " ng-click="ctrl.showAddTransaction() ">Add Transaction</a>
+                </li>
+                <li>
+                    <a style="cursor: pointer " ng-click="ctrl.showDeleteTransaction() ">Delete Transaction</a>
+                </li>
             </ul>
 
         </div>

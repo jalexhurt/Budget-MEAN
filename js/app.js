@@ -20,6 +20,7 @@ app.controller("HomePageController", [
         s.first_id = res.data[0].id;
         for (var i = 0; i < s.transactions.length; i++) {
           s.transactions[i].date = s.transactions[i].date.substring(0, 10);
+          s.transactions[i].amount = s.transactions[i].amount.toFixed(2);
           delete s.transactions[i].id;
         }
 
@@ -199,7 +200,19 @@ app.controller("HomePageController", [
       });
 
       var avg = total / amts.length;
-      this.stats.push({ title: "Average", value: avg });
+      this.stats.push({ title: "Average", value: avg.toFixed(2) });
+
+      //median
+      amts.sort();
+      var median = null;
+      if (amts.length % 2 == 0) {
+        var half = amts.length / 2;
+        median = (amts[half] + amts[half - 1]) / 2;
+      } else {
+        var half = Math.floor(amts.length / 2);
+        median = amts[half];
+      }
+      this.stats.push({ title: "Median", value: median.toFixed(2) });
     };
 
     this.submitVisualizeTwoDates = function() {
