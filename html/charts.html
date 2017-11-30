@@ -1,10 +1,5 @@
 <div class="container" ng-controller="HomePageController as ctrl">
-    <h3 class="text-center">Budget Visualizer</h3>
-    <div class="col-md-12">
-        <div class="col-md-1" style="padding-left:0;margin-left:0;">
-            <a href="/" class="btn btn-link col-md-12">&lt; Go Back</a>
-        </div>
-    </div>
+    <h1 class="text-center">Budget Visualizer</h1>
     <form ng-submit="ctrl.submitVisualize()" class="form">
         <div class="form-group">
             <label class="control-label">View statistics of transactions made in the last... </label>
@@ -14,9 +9,9 @@
                 </div>
                 <div class="col-md-6">
                     <select class="form-control" ng-model="ctrl.length" required>
-                        <option>days</option>
-                        <option>weeks</option>
-                        <option>months</option>
+                        <option>day(s)</option>
+                        <option>week(s)</option>
+                        <option>month(s)</option>
                     </select>
                 </div>
             </div>

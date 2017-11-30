@@ -175,6 +175,7 @@ app.controller("HomePageController", [
         var settings = basic_dialog;
         settings.width = "90%";
         settings.title = "Transaction Statistics";
+        settings.position = { my: "center", at: "center top" };
         $("#chart-popup").dialog(basic_dialog);
         this.stat_transactions = data;
         this.getStatistics();
@@ -236,6 +237,7 @@ app.controller("HomePageController", [
         var settings = basic_dialog;
         settings.width = "90%";
         settings.title = "Transaction Statistics";
+        settings.position = { my: "center", at: "center top" };
         $("#chart-popup").dialog(basic_dialog);
         this.stat_transactions = data;
         this.getStatistics();

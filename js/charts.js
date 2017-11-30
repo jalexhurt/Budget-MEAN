@@ -3,7 +3,7 @@ function create_graph(data, id) {
   var dataset = data;
   $("#" + id).html("");
   var w = 700;
-  var h = 300;
+  var h = 500;
   var barPadding = 1;
 
   //Create SVG element
