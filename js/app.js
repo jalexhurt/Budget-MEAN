@@ -199,7 +199,21 @@ app.controller("HomePageController", [
       amts.forEach(function(a) {
         total += a;
       });
+      this.stats.push({title: "Number", value: amts.length })
+      
+      var min = amts[0];
+      var max = amts[0];
+      amts.forEach(function(a) {
+        if(a < min) {
+          min = a;
+        }
 
+        if(a > max) {
+          max = a;
+        }
+      })
+      this.stats.push({title: "Minimum", value: min.toFixed(2)})
+      this.stats.push({title: "Maximum", value: max.toFixed(2)})
       var avg = total / amts.length;
       this.stats.push({ title: "Average", value: avg.toFixed(2) });
 
@@ -214,6 +228,16 @@ app.controller("HomePageController", [
         median = amts[half];
       }
       this.stats.push({ title: "Median", value: median.toFixed(2) });
+
+      //stddev
+      var sum = 0;
+      amts.forEach(function(a) {
+        sum += Math.pow(a - avg, 2)
+      })
+      var stddev = Math.sqrt(sum / (amts.length -1))
+      this.stats.push({title : "Standard Deviation", value: stddev.toFixed(2)})
+
+
     };
 
     this.submitVisualizeTwoDates = function() {
